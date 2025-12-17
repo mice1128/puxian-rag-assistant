@@ -1,0 +1,53 @@
+{
+  "timestamp": "2025-12-16T17:57:03.593907",
+  "results": {
+    "summary": {
+      "total_tests": 3,
+      "successful": 3,
+      "avg_latency": 152.92,
+      "avg_tps": 5.4,
+      "peak_memory_mb": 6996
+    },
+    "details": [
+      {
+        "id": 1,
+        "question": "莆仙话中祭祀怎么说？",
+        "performance": {
+          "avg_latency": 122.19,
+          "min_latency": 60.47,
+          "max_latency": 244.54,
+          "avg_tps": 6.3,
+          "peak_memory_mb": 6996,
+          "memory_delta_mb": 54,
+          "num_runs": 3
+        }
+      },
+      {
+        "id": 2,
+        "question": "莆仙话的\"厝\"是什么意思？",
+        "performance": {
+          "avg_latency": 244.11,
+          "min_latency": 244.01,
+          "max_latency": 244.24,
+          "avg_tps": 3.4,
+          "peak_memory_mb": 6996,
+          "memory_delta_mb": 0,
+          "num_runs": 3
+        }
+      },
+      {
+        "id": 3,
+        "question": "如何用莆仙话说\"吃饭\"？",
+        "performance": {
+          "avg_latency": 92.47,
+          "min_latency": 73.92,
+          "max_latency": 103.89,
+          "avg_tps": 6.4,
+          "peak_memory_mb": 6996,
+          "memory_delta_mb": 0,
+          "num_runs": 3
+        }
+      }
+    ]
+  }
+}

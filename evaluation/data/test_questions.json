@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "question": "莆仙话中祭祀怎么说？",
+    "category": "词汇查询",
+    "expected_keywords": ["祭祀"]
+  },
+  {
+    "id": 2,
+    "question": "莆仙话的‘厝’意思？",
+    "category": "词义解释",
+    "expected_keywords": ["厝", "房子"]
+  },
+  {
+    "id": 3,
+    "question": "如何用莆仙话说‘吃饭’？",
+    "category": "日常用语",
+    "expected_keywords": ["吃饭", "食"]
+  },
+  {
+    "id": 4,
+    "question": "莆仙话中表示‘漂亮’的词有哪些？",
+    "category": "词汇查询",
+    "expected_keywords": ["漂亮", "美"]
+  },
+  {
+    "id": 5,
+    "question": "莆仙话和闽南话有什么区别？",
+    "category": "综合问答",
+    "expected_keywords": ["莆仙话", "闽南话"]
+  },
+  {
+    "id": 6,
+    "question": "莆仙话的声调系统是怎样的？",
+    "category": "语音系统",
+    "expected_keywords": ["声调"]
+  },
+  {
+    "id": 7,
+    "question": "用莆仙话怎么说‘谢谢’？",
+    "category": "日常用语",
+    "expected_keywords": ["谢谢"]
+  },
+  {
+    "id": 8,
+    "question": "莆仙话中‘阿兄’指的是什么？",
+    "category": "称谓",
+    "expected_keywords": ["阿兄", "哥哥"]
+  },
+  {
+    "id": 9,
+    "question": "莆仙话里‘走’怎么说？",
+    "category": "动词",
+    "expected_keywords": ["走", "行"]
+  },
+  {
+    "id": 10,
+    "question": "莆仙话的韵母有哪些特点？",
+    "category": "语音系统",
+    "expected_keywords": ["韵母"]
+  }
+]
