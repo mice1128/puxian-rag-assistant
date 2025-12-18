@@ -1,0 +1,63 @@
+{
+  "timestamp": "2025-12-18T10:12:33.244251",
+  "single": [
+    {
+      "prompt": "莆仙话中祭祀怎么说？",
+      "avg_latency": 2.925,
+      "avg_tokens": 199.5,
+      "throughput": 68.2
+    },
+    {
+      "prompt": "莆仙话的‘厝’是什么意思？",
+      "avg_latency": 3.722,
+      "avg_tokens": 256.0,
+      "throughput": 68.8
+    },
+    {
+      "prompt": "如何用莆仙话说‘吃饭’？",
+      "avg_latency": 3.693,
+      "avg_tokens": 256.0,
+      "throughput": 69.3
+    },
+    {
+      "prompt": "莆仙话中表示‘漂亮’的词有哪些？",
+      "avg_latency": 3.591,
+      "avg_tokens": 249.0,
+      "throughput": 69.3
+    }
+  ],
+  "batch": [
+    {
+      "batch_size": 1,
+      "latency": 3.687,
+      "throughput": 69.4
+    },
+    {
+      "batch_size": 4,
+      "latency": 4.329,
+      "throughput": 207.7
+    },
+    {
+      "batch_size": 8,
+      "latency": 5.311,
+      "throughput": 364.3
+    },
+    {
+      "batch_size": 16,
+      "latency": 8.772,
+      "throughput": 443.7
+    }
+  ],
+  "config": {
+    "model_path": "/home/zl/LLM/Qwen2.5-7B-Instruct-GPTQ-Int4",
+    "gpu_id": 1,
+    "tensor_parallel_size": 1,
+    "max_tokens": 256,
+    "temperature": 0.7,
+    "top_p": 0.9,
+    "top_k": 50,
+    "dtype": "auto",
+    "quantization": "gptq",
+    "gpu_memory_utilization": 0.9
+  }
+}
