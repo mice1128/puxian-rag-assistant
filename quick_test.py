@@ -49,7 +49,7 @@ def test_chromadb():
     import chromadb
     
     client = chromadb.PersistentClient(path="/home/zl/LLM/chroma_db_putian")
-    collection = client.get_collection(name="langchain")
+    collection = client.get_collection(name="putian_dialect")
     
     count = collection.count()
     print(f"数据库文档总数: {count}\n")

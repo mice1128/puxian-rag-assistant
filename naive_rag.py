@@ -18,7 +18,7 @@ class NaiveRAG:
     
     def __init__(
         self,
-        collection_name: str = "langchain",
+        collection_name: str = "putian_dialect",
         embedding_model_path: str = "/home/zl/LLM/bge-small-zh-v1.5",
         chroma_db_path: str = "/home/zl/LLM/chroma_db_putian",
         vllm_api_url: str = "http://127.0.0.1:8001/v1"

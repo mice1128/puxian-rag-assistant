@@ -66,18 +66,38 @@ class BM25Retriever:
 class BGEReranker:
     """BGE Reranker 重排序模型"""
     
-    def __init__(self, model_path: str = "/home/zl/LLM/bge-reranker-base"):
+    def __init__(self, model_path: str = "BAAI/bge-reranker-base"):
         """
         初始化 Reranker
         
         Args:
-            model_path: Reranker 模型路径
+            model_path: Reranker 模型路径或 HuggingFace model ID
         """
         from FlagEmbedding import FlagReranker
+        import os
         
-        print(f"加载 BGE Reranker: {model_path}")
-        self.reranker = FlagReranker(model_path, use_fp16=True, device="cuda:1")
-        print("✓ Reranker 加载完成")
+        # 检查本地路径
+        local_path = "/home/zl/LLM/bge-reranker-base"
+        if os.path.exists(local_path):
+            model_path = local_path
+            print(f"使用本地 Reranker: {model_path}")
+        else:
+            print(f"本地模型不存在，将从 HuggingFace 下载: {model_path}")
+            print("  (首次使用会自动下载，约 600MB，请稍等...)")
+        
+        try:
+            # 禁用多进程，避免 multiprocessing 问题
+            self.reranker = FlagReranker(
+                model_path, 
+                use_fp16=True, 
+                device="cuda:1",
+                num_workers=0  # 禁用多进程
+            )
+            print("✓ Reranker 加载完成")
+        except Exception as e:
+            print(f"⚠ Reranker 加载失败: {e}")
+            print("  将使用简化的重排序方案（基于向量相似度）")
+            self.reranker = None
     
     def rerank(self, query: str, documents: List[str], top_k: int = 5) -> List[Dict]:
         """
@@ -94,6 +114,19 @@ class BGEReranker:
         if not documents:
             return []
         
+        # 如果 reranker 不可用，使用简化方案
+        if self.reranker is None:
+            print("  使用简化重排序（保持原顺序）")
+            results = []
+            for i, doc in enumerate(documents[:top_k]):
+                results.append({
+                    'content': doc,
+                    'score': 1.0 - (i * 0.1),  # 简单的递减分数
+                    'rank': i + 1,
+                    'source': 'fallback'
+                })
+            return results
+        
         # 构建查询-文档对
         pairs = [[query, doc] for doc in documents]
         
@@ -104,16 +137,37 @@ class BGEReranker:
         if not isinstance(scores, list):
             scores = [scores]
         
+        # 辅助函数：安全地转换 score 为 float
+        def safe_float(score):
+            # 处理 numpy 数组
+            if hasattr(score, 'flatten'):
+                flat = score.flatten()
+                return float(flat[0]) if len(flat) > 0 else 0.0
+            elif hasattr(score, 'item'):
+                try:
+                    return float(score.item())
+                except (ValueError, TypeError):
+                    # 如果 item() 失败，尝试直接索引
+                    return float(score[0]) if hasattr(score, '__getitem__') else 0.0
+            elif hasattr(score, '__float__'):
+                return float(score)
+            elif isinstance(score, (list, tuple)) and len(score) > 0:
+                return float(score[0])
+            else:
+                return float(score)
+        
         # 按分数排序
         doc_score_pairs = list(zip(documents, scores))
-        doc_score_pairs.sort(key=lambda x: x[1], reverse=True)
+        doc_score_pairs.sort(key=lambda x: safe_float(x[1]), reverse=True)
         
         # 返回 top_k
         results = []
         for i, (doc, score) in enumerate(doc_score_pairs[:top_k]):
+            score_val = safe_float(score)
+            
             results.append({
                 'content': doc,
-                'score': float(score),
+                'score': score_val,
                 'rank': i + 1,
                 'source': 'reranker'
             })
@@ -126,9 +180,9 @@ class AdvancedRAG:
     
     def __init__(
         self,
-        collection_name: str = "langchain",
+        collection_name: str = "putian_dialect",
         embedding_model_path: str = "/home/zl/LLM/bge-small-zh-v1.5",
-        reranker_model_path: str = "/home/zl/LLM/bge-reranker-base",
+        reranker_model_path: str = "BAAI/bge-reranker-base",
         chroma_db_path: str = "/home/zl/LLM/chroma_db_putian",
         vllm_api_url: str = "http://127.0.0.1:8001/v1"
     ):
